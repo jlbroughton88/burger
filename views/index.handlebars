@@ -12,17 +12,21 @@
         <div class="col-lg-10">
             <ul>
                 {{#each burgers}}
+                {{#if devoured}}
+                {{else}}
                 <li>
                     <p>Burger Name: {{burger_name}}</p>
                 </li>
-
+                
             </ul>
+            
             <div class="col-lg-1">
                 <button id="eatBurger" data-burgerid="{{id}}" >Eat the burger!</button>
             </div>
             <div class="col-lg-1">
                 <button id="deleteBurger" data-burgerid="{{id}}">Delete Burger!</button>
             </div>
+            {{/if}}
             {{/each}}
         </div>
     </div>
