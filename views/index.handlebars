@@ -9,7 +9,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <ul>
                 {{#each burgers}}
                 {{#if devoured}}
@@ -17,19 +17,19 @@
                 <li>
                     <p>Burger Name: {{burger_name}}</p>
                 </li>
-                
+
             </ul>
-            
-            <div class="col-lg-1">
-                <button id="eatBurger" data-burgerid="{{id}}" >Eat the burger!</button>
-            </div>
-            <div class="col-lg-1">
-                <button id="deleteBurger" data-burgerid="{{id}}">Delete Burger!</button>
-            </div>
-            {{/if}}
-            {{/each}}
         </div>
+        <div class="col-lg-2">
+            <button class="eatBurger" data-burgerid="{{id}}">Eat the burger!</button>
+        </div>
+        <div class="col-lg-2">
+            <button class="deleteBurger" data-burgerid="{{id}}">Delete Burger!</button>
+        </div>
+        {{/if}}
+        {{/each}}
     </div>
+</div>
 </div>
 <div class="container">
     <div class="row">
@@ -81,9 +81,9 @@
         );
     });
 
-    $("#eatBurger").on("click", function (event) {
+    $(".eatBurger").on("click", function (event) {
         // Make sure to preventDefault on a submit event.
-        
+
         event.preventDefault();
 
         var id = $(this).attr("data-burgerid")
@@ -99,7 +99,7 @@
         );
     });
 
-    $("#deleteBurger").on("click", function (event) {
+    $(".deleteBurger").on("click", function (event) {
         var id = $(this).data("burgerid");
         $.ajax("/burgers/" + id, {
             type: "DELETE"

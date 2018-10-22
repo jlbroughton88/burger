@@ -42,6 +42,15 @@ app.get("/", function (req, res) {
     if (err) {
       return res.status(500).end();
     }
+    var burgerArr = []
+    for(var i = 0; i < data.length; i++) {
+      var obj = {
+        id : data[i].id,
+        burger_name : data[i].burger_name,
+        devoured : data[i].devoured
+      }
+      burgerArr.push(obj)
+    }
     res.render("index", { burgers: data })
   });
 });
