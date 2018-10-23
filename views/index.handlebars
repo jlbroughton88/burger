@@ -9,7 +9,7 @@
 {{#each burgers}}
 {{#if devoured}}
 {{else}}
-<div class="container">
+<div class="container card p-2 bg-secondary">
     <div class="row">
         <div class="col-lg-8">
             <ul>
@@ -31,103 +31,111 @@
     </div>
 </div>
 </div>
-<div class="container">
+<div class="container bg-danger">
     <div class="row">
         <div class="col-lg-12">
             <form class="mt-3 d-flex justify-content-center" id="burgerForm" action="/" method="POST">
-
-                <textarea placeholder="Create your own burger!" type="text" name="burger_name"></textarea>
-
-                <button class="mt-3" id="createBurger" type="submit">Submit</button>
+                <input placeholder="Create your own!!" type="text" name="burger_name"></input>
             </form>
         </div>
     </div>
-</div>
-
-<div class="container">
     <div class="row">
-        <div class="col-lg-12">
-            <h2>Eaten burgers: </h2>
-            {{#each burgers}}
-            {{#if devoured}}
-            <div class="col-lg-10">
-                <li>{{burger_name}}</li>
-            </div>
-            <div class="col-lg-2">
-                <button class="throwUp" data-burgerid="{{id}}">Throw Up</button>
-            </div>
-            {{/if}}
-            {{/each}}
+        <div class="col-lg-12 d-flex justify-content-center">
+            <button class="mt-1" for="burgerForm" id="createBurger" type="submit">Submit</button>
         </div>
     </div>
-</div>
 
-<script type="text/javascript">
 
-    $("#burgerForm").on("submit", function (event) {
-        // Make sure to preventDefault on a submit event.
-        event.preventDefault();
+    <div class="container card bg-secondary">
+        <div class="row">
+            <div class="col-lg-10">
+                <h2>Eaten burgers: </h2>
+                {{#each burgers}}
+                {{#if devoured}}
+                <li>{{burger_name}}</li>
 
-        // [name=plan] will find an element with a "name" attribute equal to the string "plan"
-        var newBurger = {
-            burger_name: $("#burgerForm [name=burger_name]").val().trim()
-        };
+                {{/if}}
+                {{/each}}
+            </div>
+            <div class="col-lg-2">
+                {{#each burgers}}
+                {{#if devoured}}
+                <button class="throwUp" data-burgerid="{{id}}">Throw Up</button>
+                {{/if}}
+                {{/each}}
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        // Send the POST request.
-        $.ajax("/burgers", {
-            type: "POST",
-            data: newBurger
-        }).then(
-            function () {
-                console.log("created new plan");
-                // Reload the page to get the updated list
-                location.reload();
-            }
-        );
-    });
 
-    $(".eatBurger").on("click", function (event) {
-        // Make sure to preventDefault on a submit event.
+    <script type="text/javascript">
 
-        event.preventDefault();
+        $("#createBurger").on("click", function (event) {
+            // Make sure to preventDefault on a submit event.
+            event.preventDefault();
 
-        var id = $(this).attr("data-burgerid")
-        // Send the PUT request.
-        $.ajax("/burgers/" + id, {
-            type: "PUT"
-        }).then(
-            function () {
-                console.log("updated id ", id);
-                // Reload the page to get the updated list
-                location.reload();
-            }
-        );
-    });
+            // [name=plan] will find an element with a "name" attribute equal to the string "plan"
+            var newBurger = {
+                burger_name: $("#burgerForm [name=burger_name]").val().trim()
+            };
 
-    $(".deleteBurger").on("click", function (event) {
-        var id = $(this).data("burgerid");
-        $.ajax("/burgers/" + id, {
-            type: "DELETE"
-        }).then(
-            function () {
-                console.log("deleted id: " + id);
-                location.reload();
-            }
-        )
-    })
+            // Send the POST request.
+            $.ajax("/burgers", {
+                type: "POST",
+                data: newBurger
+            }).then(
+                function () {
+                    console.log("created new plan");
+                    // Reload the page to get the updated list
+                    location.reload();
+                }
+            );
+        });
 
-    $(".throwUp").on("click", function(event) {
-        var id = $(this).data("burgerid");
-        $.ajax("/burgers/" + id, {
-            type: "DELETE"
-        }).then(
-            function() {
-                console.log("deleted id: " + id);
-                location.reload();
-            }
-        )
-    })
+        $(".eatBurger").on("click", function (event) {
+            // Make sure to preventDefault on a submit event.
+
+            event.preventDefault();
+
+            var id = $(this).attr("data-burgerid")
+            // Send the PUT request.
+            $.ajax("/burgers/" + id, {
+                type: "PUT"
+            }).then(
+                function () {
+                    console.log("updated id ", id);
+                    // Reload the page to get the updated list
+                    location.reload();
+                }
+            );
+        });
+
+        $(".deleteBurger").on("click", function (event) {
+            var id = $(this).data("burgerid");
+            $.ajax("/burgers/" + id, {
+                type: "DELETE"
+            }).then(
+                function () {
+                    console.log("deleted id: " + id);
+                    location.reload();
+                }
+            )
+        })
+
+        $(".throwUp").on("click", function (event) {
+            var id = $(this).data("burgerid");
+            $.ajax("/burgers/" + id, {
+                type: "DELETE"
+            }).then(
+                function () {
+                    console.log("deleted id: " + id);
+                    location.reload();
+                }
+            )
+        })
 
 //
 //
-</script>
+    </script>
