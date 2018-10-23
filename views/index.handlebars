@@ -6,16 +6,16 @@
     </div>
 </div>
 
-
+{{#each burgers}}
+{{#if devoured}}
+{{else}}
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
             <ul>
-                {{#each burgers}}
-                {{#if devoured}}
-                {{else}}
+
                 <li>
-                    <p>Burger Name: {{burger_name}}</p>
+                    <p class="font-weight-bold">{{burger_name}}</p>
                 </li>
 
             </ul>
@@ -36,7 +36,7 @@
         <div class="col-lg-12">
             <form class="mt-3 d-flex justify-content-center" id="burgerForm" action="/" method="POST">
 
-                <textarea placeholder="Type a burger here!" type="text" name="burger_name"></textarea>
+                <textarea placeholder="Create your own burger!" type="text" name="burger_name"></textarea>
 
                 <button class="mt-3" id="createBurger" type="submit">Submit</button>
             </form>
@@ -50,7 +50,12 @@
             <h2>Eaten burgers: </h2>
             {{#each burgers}}
             {{#if devoured}}
-            <li>{{burger_name}}</li>
+            <div class="col-lg-10">
+                <li>{{burger_name}}</li>
+            </div>
+            <div class="col-lg-2">
+                <button class="throwUp" data-burgerid="{{id}}">Throw Up</button>
+            </div>
             {{/if}}
             {{/each}}
         </div>
@@ -105,6 +110,18 @@
             type: "DELETE"
         }).then(
             function () {
+                console.log("deleted id: " + id);
+                location.reload();
+            }
+        )
+    })
+
+    $(".throwUp").on("click", function(event) {
+        var id = $(this).data("burgerid");
+        $.ajax("/burgers/" + id, {
+            type: "DELETE"
+        }).then(
+            function() {
                 console.log("deleted id: " + id);
                 location.reload();
             }

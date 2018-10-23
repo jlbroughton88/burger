@@ -1,11 +1,9 @@
-### Schema
-CREATE DATABASE quotes_db;
-USE quotes_db;
-
-CREATE TABLE quotes
-(
-	id int NOT NULL AUTO_INCREMENT,
-	author varchar(255) NOT NULL,
-	quote TEXT NOT NULL,
-	PRIMARY KEY (id)
+DROP DATABASE IF EXISTS burgers_db;
+CREATE DATABASE burgers_db;
+USE burgers_db;
+CREATE TABLE burgers (
+id INT AUTO_INCREMENT,
+burger_name VARCHAR (20) NOT NULL,
+devoured BOOLEAN default false,
+PRIMARY KEY (id)
 );
